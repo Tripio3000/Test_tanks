@@ -5,15 +5,16 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReceiveMessageTask extends Task<Void> {
     Socket socket;
@@ -41,6 +42,7 @@ public class ReceiveMessageTask extends Task<Void> {
 
     public Void call() throws Exception {
         sc = new Scanner(socket.getInputStream());
+        AtomicBoolean alive = new AtomicBoolean(true);
 
         Image imagePl = null;
         Image imageEn = null;
@@ -83,6 +85,7 @@ public class ReceiveMessageTask extends Task<Void> {
                 if (serverMessage.startsWith("PlShot")) {
                     Platform.runLater(() -> {
                         Image imageBul = null;
+                        AtomicBoolean shot = new AtomicBoolean(false);
                         try (FileInputStream fileInputStream = new FileInputStream("Client/target/classes/assets/playerBullet.png")) {
                             imageBul = new Image(fileInputStream);
                         } catch (IOException e) {
@@ -93,10 +96,11 @@ public class ReceiveMessageTask extends Task<Void> {
                         bullet.setX(player.getX() + 39);
                         root.getChildren().add(bullet);
 
-                        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2), animation -> {
+                        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), animation -> {
                             if (bullet.isVisible()) {
                                 bullet.setY(bullet.getY() - 1);
-                                if (bullet.getY() == 240 && bullet.getX() >= enemy.getX() && bullet.getX() <= (enemy.getX() + 80)) {
+                                if (!shot.get() && bullet.getY() <= 240 && bullet.getY() >= 140 && bullet.getX() >= enemy.getX() && bullet.getX() <= (enemy.getX() + 80)) {
+                                    shot.set(true);
                                     root.getChildren().remove(bullet);
                                     if (lifeEn.getFitWidth() - 15 != 0) {
                                         lifeEn.setFitWidth(lifeEn.getFitWidth() - 15);
@@ -104,20 +108,22 @@ public class ReceiveMessageTask extends Task<Void> {
                                     }
                                     else {
                                         root.getChildren().remove(lifeEn);
+//                                        alive.set(false);
                                         System.out.println("ENEMY DIE");
-                                        printWriter.println("EOG");
+                                        printWriter.println("EOGPL");
 //                                        primaryStage.close();
                                     }
                                 }
                             }
                         }));
-                        timeline.setCycleCount(800);
+                        timeline.setCycleCount(850);
                         timeline.play();
                     });
                 }
                 if (serverMessage.startsWith("EnShot")) {
                     Platform.runLater(() -> {
                         Image imageBul = null;
+                        AtomicBoolean shot = new AtomicBoolean(false);
                         try (FileInputStream fileInputStream = new FileInputStream("Client/target/classes/assets/enemyBullet.png")) {
                             imageBul = new Image(fileInputStream);
                         } catch (IOException e) {
@@ -128,10 +134,11 @@ public class ReceiveMessageTask extends Task<Void> {
                         bullet.setX(enemy.getX() + 38);
                         root.getChildren().add(bullet);
 
-                        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2), animation -> {
+                        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), animation -> {
                             if (bullet.isVisible()) {
                                 bullet.setY(bullet.getY() + 1);
-                                if (bullet.getY() == 760 && bullet.getX() >= player.getX() && bullet.getX() <= (player.getX() + 80)) {
+                                if (!shot.get() && bullet.getY() >= 760 && bullet.getY() <= 840 && bullet.getX() >= player.getX() && bullet.getX() <= (player.getX() + 80)) {
+                                    shot.set(true);
                                     root.getChildren().remove(bullet);
                                     if (life.getFitWidth() - 15 != 0) {
                                         life.setFitWidth(life.getFitWidth() - 15);
@@ -139,14 +146,14 @@ public class ReceiveMessageTask extends Task<Void> {
                                     }
                                     else {
                                         root.getChildren().remove(life);
+                                        alive.set(false);
                                         System.out.println("PLAYER DIE");
-                                        printWriter.println("EOG");
-//                                        primaryStage.close();
+                                        printWriter.println("EOGPL");
                                     }
                                 }
                             }
                         }));
-                        timeline.setCycleCount(800);
+                        timeline.setCycleCount(850);
                         timeline.play();
                     });
                 }
@@ -197,10 +204,22 @@ public class ReceiveMessageTask extends Task<Void> {
                 }
                 if (serverMessage.startsWith("EOG")) {
                     Platform.runLater(() -> {
+                        System.out.println("serverM EOG: " + serverMessage);
+                        final javafx.scene.control.Label label = new javafx.scene.control.Label();
+                        if (alive.get()) {
+                            label.setText("WIN");
+                        }
+                        else {
+                            label.setText("FAIL");
+                        }
+                        label.setFont(Font.font("Arial", 30));
+                        label.setLayoutY(450);
+                        label.setLayoutX(470);
                         Fail.setX(350);
                         Fail.setY(300);
-                        if (!root.getChildren().contains(Fail)) {
+                        if (!root.getChildren().contains(Fail) && !root.getChildren().contains(label)) {
                             root.getChildren().add(Fail);
+                            root.getChildren().add(label);
                         }
                     });
                 }

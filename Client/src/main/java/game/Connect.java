@@ -35,7 +35,7 @@ public class Connect {
                 try {
                     window.create("localhost", 8081);
                     Client client = new Client(stage, newScene);
-                    Socket socket = client.startConnection("192.168.70.31", 8081);
+                    Socket socket = client.startConnection("localhost", 8081);
                     printWriter = new PrintWriter(socket.getOutputStream(), true);
                     ReceiveMessageTask task = new ReceiveMessageTask(socket, root, stage, printWriter);
                     ExecutorService service = Executors.newFixedThreadPool(1);
@@ -54,4 +54,3 @@ public class Connect {
         return root;
     }
 }
-//

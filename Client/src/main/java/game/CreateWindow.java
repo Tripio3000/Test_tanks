@@ -43,7 +43,7 @@ public class CreateWindow {
         primaryStage.setTitle("Tanks");
         primaryStage.setWidth(1000);
         primaryStage.setHeight(1000);
-        primaryStage.setResizable(false);
+//        primaryStage.setResizable(false);
 
 //        FileInputStream fileInputStream = new FileInputStream("Client/target/classes/assets/player.png");
 //        Image imagePl = new Image(fileInputStream);
