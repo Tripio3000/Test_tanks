@@ -20,9 +20,9 @@ public class Connect {
     public static FlowPane ConnectToServer (final Stage primaryStage) {
         FlowPane root = new FlowPane();
 
-        Button button = new Button("Press");
-        final Label label = new Label("lox");
-        label.setPrefWidth(100);
+        Button button = new Button("Connect to server");
+        final Label label = new Label("Press button to start game");
+        label.setPrefWidth(200);
         button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 label.setText("Hello!");

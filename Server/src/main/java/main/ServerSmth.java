@@ -10,11 +10,16 @@ public class ServerSmth extends Thread {
     private Socket socket;
     private boolean isRunning = false;
     private long id;
+    private boolean ready;
 
     public ServerSmth(Socket socket, int id) {
         this.socket = socket;
         this.id = id;
         start();
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     private void send (String str) {
@@ -29,12 +34,15 @@ public class ServerSmth extends Thread {
         super.run();
         String str;
         System.out.println("This id: " + id);
+
         try {
             Scanner scan = new Scanner(socket.getInputStream());
             send("Init");
             isRunning = true;
             while (scan.hasNext()) {
                 str = scan.nextLine();
+                if (!ready)
+                    continue;
                 if (str.startsWith("ESC")) {
                     send("ESC");
                     socket.close();

@@ -17,8 +17,8 @@ public class Main extends Application {
 
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Window");
-        primaryStage.setWidth(100);
-        primaryStage.setHeight(100);
+        primaryStage.setWidth(300);
+        primaryStage.setHeight(200);
 
         primaryStage.setScene(new Scene(Connect.ConnectToServer(primaryStage)));
         primaryStage.show();

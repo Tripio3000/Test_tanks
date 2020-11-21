@@ -22,6 +22,11 @@ public class Server {
 
                 serverList.add(new ServerSmth(socket, i));
 
+                if (serverList.size() == 2) {
+                    for (ServerSmth s : serverList) {
+                        s.setReady(true);
+                    }
+                }
 //                for (ServerSmth s : Server.serverList) {
 //                    System.out.println("Socket id: " + s.getId());
 //                }

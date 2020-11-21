@@ -25,6 +25,7 @@ public class Client {
         try {
             socket = new Socket(ip, port);
         } catch (IOException e) {
+            System.out.println("exeption");
             e.fillInStackTrace();
         }
         return socket;
