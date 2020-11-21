@@ -41,14 +41,11 @@ public class Connect {
                     ExecutorService service = Executors.newFixedThreadPool(1);
                     service.execute(task);
                     client.keyListener(socket, printWriter);
-                    System.out.println("111");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
-        System.out.println("afterbutton");
-
         root.getChildren().add(button);
         root.getChildren().add(label);
         return root;

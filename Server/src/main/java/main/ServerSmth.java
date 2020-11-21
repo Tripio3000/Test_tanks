@@ -33,8 +33,6 @@ public class ServerSmth extends Thread {
     public void run() {
         super.run();
         String str;
-        System.out.println("This id: " + id);
-
         try {
             Scanner scan = new Scanner(socket.getInputStream());
             send("Init");
@@ -114,6 +112,5 @@ public class ServerSmth extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        System.exit(0);
     }
 }

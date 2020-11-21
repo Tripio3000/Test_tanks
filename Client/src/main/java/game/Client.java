@@ -36,12 +36,6 @@ public class Client {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-//                PrintWriter printWriter = null;
-//                try {
-//                    printWriter = new PrintWriter(socket.getOutputStream(), true);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
                 if (event.getCode() == KeyCode.SPACE) {
                     printWriter.println("PlShot");
 //                    System.out.println("SPACE");

@@ -24,42 +24,12 @@ public class CreateWindow {
     }
 
     public void create(String ip, int port) throws IOException {
-//        Socket socket = null;
-//        Scanner sc = null;
-//        try {
-//            socket = new Socket(ip, port);
-//            sc = new Scanner(socket.getInputStream());
-//            String str = sc.nextLine();
-//            System.out.println(str);
-//        } catch (IOException e) {
-//            e.fillInStackTrace();
-//        }
-
-
-//        Group root = new Group();
-//        Scene newScene = new Scene(root);
-//        CreateWindow win = new CreateWindow(primaryStage, newScene, root);
         primaryStage.setScene(newScene);
         primaryStage.setTitle("Tanks");
         primaryStage.setWidth(1000);
         primaryStage.setHeight(1000);
-//        primaryStage.setResizable(false);
-
-//        FileInputStream fileInputStream = new FileInputStream("Client/target/classes/assets/player.png");
-//        Image imagePl = new Image(fileInputStream);
-//
-//        ImageView Player = new ImageView(imagePl);
-//        Player.setFitWidth(80);
-//        Player.setFitHeight(100);
-//        Player.setY(500);
-//        Player.setX(300);
-//        fileInputStream.close();
-
 
         root.getChildren().add(field(1000, 1000));
-//        root.getChildren().add(box(300, 50, 650, 50));
-//        root.getChildren().add(box(300, 50, 50, 900));
-//        root.getChildren().add(Player);
         primaryStage.show();
         System.out.println("Close game window");
     }

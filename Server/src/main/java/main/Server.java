@@ -27,30 +27,8 @@ public class Server {
                         s.setReady(true);
                     }
                 }
-//                for (ServerSmth s : Server.serverList) {
-//                    System.out.println("Socket id: " + s.getId());
-//                }
-
                 System.out.println("Number of players: " + i);
             }
-
-//            Scanner scan = new Scanner(socket.getInputStream());
-//            PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
-//            printWriter.println("ST");
-//
-//            while (true) {
-//                String str = scan.nextLine();
-//                printWriter.println(str);
-//                System.out.println(str);
-//            }
-
-
-//            while (scan.hasNextLine()) {
-//                String str = scan.nextLine();
-//                System.out.println(str);
-//            }
-
-
         }
         catch (IOException e) {
             e.printStackTrace();

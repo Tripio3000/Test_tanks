@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
@@ -31,11 +32,43 @@ public class ReceiveMessageTask extends Task<Void> {
         this.printWriter = printWriter;
     }
 
-    public void rr(ImageView player) {
-        System.out.println("rrr");
+    public void node_left(ImageView node) {
         Platform.runLater(() -> {
-            if (player.getX() + 50 < 960) {
-                player.setX(player.getX() + 50);
+            if (node.getX() + 30 < 940) {
+                node.setX(node.getX() + 30);
+            }
+        });
+    }
+    public void node_right(ImageView node) {
+        Platform.runLater(() -> {
+            if (node.getX() - 30 > 0) {
+                node.setX(node.getX() - 30);
+            }
+        });
+    }
+
+    public void init_image(ImageView image, double w, double h) {
+        image.setFitWidth(w);
+        image.setFitHeight(h);
+    }
+
+    public void end_of_game(ImageView Fail, AtomicBoolean alive) {
+        Platform.runLater(() -> {
+            final Label label = new Label();
+            if (alive.get()) {
+                label.setText("WIN");
+            }
+            else {
+                label.setText("FAIL");
+            }
+            label.setFont(Font.font("Arial", 30));
+            label.setLayoutY(450);
+            label.setLayoutX(470);
+            Fail.setX(350);
+            Fail.setY(300);
+            if (!root.getChildren().contains(Fail) && !root.getChildren().contains(label)) {
+                root.getChildren().add(Fail);
+                root.getChildren().add(label);
             }
         });
     }
@@ -63,24 +96,18 @@ public class ReceiveMessageTask extends Task<Void> {
             e.printStackTrace();
         }
         ImageView player = new ImageView(imagePl);
-        player.setFitWidth(80);
-        player.setFitHeight(100);
+        init_image(player, 80, 100);
         ImageView enemy = new ImageView(imageEn);
-        enemy.setFitWidth(80);
-        enemy.setFitHeight(100);
+        init_image(enemy, 80, 100);
         ImageView life = new ImageView(imageLifePl);
-        life.setFitWidth(300);
-        life.setFitHeight(40);
+        init_image(life, 300, 40);
         ImageView lifeEn = new ImageView(imageLifeEn);
-        lifeEn.setFitWidth(300);
-        lifeEn.setFitHeight(40);
+        init_image(lifeEn, 300, 40);
         ImageView Fail = new ImageView(imageFail);
-        Fail.setFitWidth(300);
-        Fail.setFitHeight(400);
+        init_image(Fail, 300, 400);
 
         while (true) {
             String serverMessage = sc.nextLine();
-//            System.out.println(serverMessage);
             if (serverMessage != null) {
                 if (serverMessage.startsWith("PlShot")) {
                     Platform.runLater(() -> {
@@ -104,7 +131,7 @@ public class ReceiveMessageTask extends Task<Void> {
                                     root.getChildren().remove(bullet);
                                     if (lifeEn.getFitWidth() - 15 != 0) {
                                         lifeEn.setFitWidth(lifeEn.getFitWidth() - 15);
-                                        System.out.println("BOOOOOOOOOOOOOOOOOM kill enemy");
+                                        System.out.println("boom shot player");
                                     }
                                     else {
                                         root.getChildren().remove(lifeEn);
@@ -142,7 +169,7 @@ public class ReceiveMessageTask extends Task<Void> {
                                     root.getChildren().remove(bullet);
                                     if (life.getFitWidth() - 15 != 0) {
                                         life.setFitWidth(life.getFitWidth() - 15);
-                                        System.out.println("BOOOOOOOOOOOOOOOOOM kill player");
+                                        System.out.println("boom shot player");
                                     }
                                     else {
                                         root.getChildren().remove(life);
@@ -174,54 +201,19 @@ public class ReceiveMessageTask extends Task<Void> {
                     });
                 }
                 if (serverMessage.startsWith("PlRight")) {
-//                    rr(player);
-                    Platform.runLater(() -> {
-                        if (player.getX() + 30 < 940) {
-                            player.setX(player.getX() + 30);
-                        }
-                    });
+                    node_left(player);
                 }
                 if (serverMessage.startsWith("PlLeft")) {
-                    Platform.runLater(() -> {
-                        if (player.getX() - 30 > 0) {
-                            player.setX(player.getX() - 30);
-                        }
-                    });
+                    node_right(player);
                 }
                 if (serverMessage.startsWith("EnRight")) {
-                    Platform.runLater(() -> {
-                        if (enemy.getX() + 30 < 940) {
-                            enemy.setX(enemy.getX() + 30);
-                        }
-                    });
+                    node_left(enemy);
                 }
                 if (serverMessage.startsWith("EnLeft")) {
-                    Platform.runLater(() -> {
-                        if (enemy.getX() - 30 > 0) {
-                            enemy.setX(enemy.getX() - 30);
-                        }
-                    });
+                    node_right(enemy);
                 }
                 if (serverMessage.startsWith("EOG")) {
-                    Platform.runLater(() -> {
-                        System.out.println("serverM EOG: " + serverMessage);
-                        final javafx.scene.control.Label label = new javafx.scene.control.Label();
-                        if (alive.get()) {
-                            label.setText("WIN");
-                        }
-                        else {
-                            label.setText("FAIL");
-                        }
-                        label.setFont(Font.font("Arial", 30));
-                        label.setLayoutY(450);
-                        label.setLayoutX(470);
-                        Fail.setX(350);
-                        Fail.setY(300);
-                        if (!root.getChildren().contains(Fail) && !root.getChildren().contains(label)) {
-                            root.getChildren().add(Fail);
-                            root.getChildren().add(label);
-                        }
-                    });
+                    end_of_game(Fail, alive);
                 }
                 if (serverMessage.startsWith("ESC")) {
                     Platform.runLater(() -> {
@@ -238,7 +230,6 @@ public class ReceiveMessageTask extends Task<Void> {
                 }
             }
         }
-        System.out.println("end of listener");
         return null;
     }
 }
