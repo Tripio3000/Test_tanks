@@ -82,11 +82,11 @@ public class ReceiveMessageTask extends Task<Void> {
         Image imageLifePl = null;
         Image imageLifeEn = null;
         Image imageFail = null;
-        try (FileInputStream fileInputStream = new FileInputStream("Client/target/classes/assets/player.png");
-             FileInputStream fileInputStream1 = new FileInputStream("Client/target/classes/assets/enemy.png");
-             FileInputStream fileInputStream2 = new FileInputStream("Client/target/classes/assets/life.png");
-             FileInputStream fileInputStream3 = new FileInputStream("Client/target/classes/assets/life.png");
-             FileInputStream fileInputStream4 = new FileInputStream("Client/target/classes/assets/fail.png")) {
+        try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/assets/player.png");
+             FileInputStream fileInputStream1 = new FileInputStream("src/main/resources/assets/enemy.png");
+             FileInputStream fileInputStream2 = new FileInputStream("src/main/resources/assets/life.png");
+             FileInputStream fileInputStream3 = new FileInputStream("src/main/resources/assets/life.png");
+             FileInputStream fileInputStream4 = new FileInputStream("src/main/resources/assets/fail.png")) {
             imagePl = new Image(fileInputStream);
             imageEn = new Image(fileInputStream1);
             imageLifePl = new Image(fileInputStream2);
@@ -113,7 +113,7 @@ public class ReceiveMessageTask extends Task<Void> {
                     Platform.runLater(() -> {
                         Image imageBul = null;
                         AtomicBoolean shot = new AtomicBoolean(false);
-                        try (FileInputStream fileInputStream = new FileInputStream("Client/target/classes/assets/playerBullet.png")) {
+                        try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/assets/playerBullet.png")) {
                             imageBul = new Image(fileInputStream);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -151,7 +151,7 @@ public class ReceiveMessageTask extends Task<Void> {
                     Platform.runLater(() -> {
                         Image imageBul = null;
                         AtomicBoolean shot = new AtomicBoolean(false);
-                        try (FileInputStream fileInputStream = new FileInputStream("Client/target/classes/assets/enemyBullet.png")) {
+                        try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/assets/enemyBullet.png")) {
                             imageBul = new Image(fileInputStream);
                         } catch (IOException e) {
                             e.printStackTrace();

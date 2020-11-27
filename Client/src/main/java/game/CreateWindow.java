@@ -36,7 +36,7 @@ public class CreateWindow {
     }
 
     public ImageView field(int w, int h) throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("Client/target/classes/assets/field.png");
+        FileInputStream fileInputStream = new FileInputStream("src/main/resources/assets/field.png");
         Image imageFon = new Image(fileInputStream);
         ImageView Field = new ImageView(imageFon);
         Field.setFitWidth(w);
@@ -46,7 +46,7 @@ public class CreateWindow {
     }
 
     public ImageView box(int w, int h, int pos_x, int pos_y) throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("Client/target/classes/assets/border.png");
+        FileInputStream fileInputStream = new FileInputStream("src/main/resources/assets/border.png");
         Image imageBorder = new Image(fileInputStream);
         ImageView Border = new ImageView(imageBorder);
         Border.setFitWidth(w);
