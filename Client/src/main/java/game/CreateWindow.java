@@ -27,9 +27,10 @@ public class CreateWindow {
         primaryStage.setScene(newScene);
         primaryStage.setTitle("Tanks");
         primaryStage.setWidth(1000);
-        primaryStage.setHeight(1000);
+        primaryStage.setHeight(890);
+        primaryStage.setResizable(false);
 
-        root.getChildren().add(field(1000, 1000));
+        root.getChildren().add(field(1000, 870));
         primaryStage.show();
         System.out.println("Close game window");
     }

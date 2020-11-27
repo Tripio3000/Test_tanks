@@ -62,10 +62,10 @@ public class ReceiveMessageTask extends Task<Void> {
                 label.setText("FAIL");
             }
             label.setFont(Font.font("Arial", 30));
-            label.setLayoutY(450);
-            label.setLayoutX(470);
             Fail.setX(350);
-            Fail.setY(300);
+            Fail.setY(200);
+            label.setLayoutX(Fail.getX() + 120);
+            label.setLayoutY(Fail.getY() + 150);
             if (!root.getChildren().contains(Fail) && !root.getChildren().contains(label)) {
                 root.getChildren().add(Fail);
                 root.getChildren().add(label);
@@ -119,14 +119,14 @@ public class ReceiveMessageTask extends Task<Void> {
                             e.printStackTrace();
                         }
                         ImageView bullet = new ImageView(imageBul);
-                        bullet.setY(755);
+                        bullet.setY(player.getY() + 5);
                         bullet.setX(player.getX() + 39);
                         root.getChildren().add(bullet);
 
                         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), animation -> {
                             if (bullet.isVisible()) {
                                 bullet.setY(bullet.getY() - 1);
-                                if (!shot.get() && bullet.getY() <= 240 && bullet.getY() >= 140 && bullet.getX() >= enemy.getX() && bullet.getX() <= (enemy.getX() + 80)) {
+                                if (!shot.get() && bullet.getY() <= 170 && bullet.getY() >= 70 && bullet.getX() >= enemy.getX() && bullet.getX() <= (enemy.getX() + 80)) {
                                     shot.set(true);
                                     root.getChildren().remove(bullet);
                                     if (lifeEn.getFitWidth() - 15 != 0) {
@@ -157,14 +157,14 @@ public class ReceiveMessageTask extends Task<Void> {
                             e.printStackTrace();
                         }
                         ImageView bullet = new ImageView(imageBul);
-                        bullet.setY(250);
+                        bullet.setY(enemy.getY() + 100);
                         bullet.setX(enemy.getX() + 38);
                         root.getChildren().add(bullet);
 
                         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1), animation -> {
                             if (bullet.isVisible()) {
                                 bullet.setY(bullet.getY() + 1);
-                                if (!shot.get() && bullet.getY() >= 760 && bullet.getY() <= 840 && bullet.getX() >= player.getX() && bullet.getX() <= (player.getX() + 80)) {
+                                if (!shot.get() && bullet.getY() >= 710 && bullet.getY() <= 790 && bullet.getX() >= player.getX() && bullet.getX() <= (player.getX() + 80)) {
                                     shot.set(true);
                                     root.getChildren().remove(bullet);
                                     if (life.getFitWidth() - 15 != 0) {
@@ -187,12 +187,12 @@ public class ReceiveMessageTask extends Task<Void> {
                 if (serverMessage.startsWith("Init")) {
                     Platform.runLater(() -> {
                         player.setX(460);
-                        player.setY(750);
+                        player.setY(700);
                         enemy.setX(460);
-                        enemy.setY(150);
-                        life.setY(900);
+                        enemy.setY(70);
+                        life.setY(player.getY() + 120);
                         life.setX(50);
-                        lifeEn.setY(50);
+                        lifeEn.setY(enemy.getY() - 60);
                         lifeEn.setX(650);
                         root.getChildren().add(life);
                         root.getChildren().add(lifeEn);
