@@ -20,7 +20,7 @@ The game will start only after both clients connect to the server. Three actions
 * move to the left (Left arrow)
 * shoot (SPACE)
 
-This is what the game looks like:
+In the screenshot, the player in the right window fired a series of shots. The player in the left window sees how his conditional opponent (that is, the player in the right window) shoots at him. The tank you are playing will always be shown to you at the bottom, and the enemy's tank at the top. This is what the game looks like:
 ![a2c8ljLhJt8](https://user-images.githubusercontent.com/61560369/100617926-31ae0d80-332c-11eb-998e-a31fd6243cec.jpg)
 
 Each player has 100 hp. Each hit takes 5 hp.
